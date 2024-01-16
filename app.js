@@ -25,7 +25,7 @@ app.post('/signup', (req, res) => {
      for(i=0;i<loginData.length;i++){
         if(loginData[i].username==signupData.username){
             condition=true;
-            res.status(401).send("usernae already exists")
+            res.status(401).send("username already exists")
             break;
         }
      }
@@ -38,24 +38,32 @@ app.post('/signup', (req, res) => {
 
   //logging in 
   app.post('/login',(req,res)=>{
-    let loginData={
+    let condition=false;
+    let loginSend={
         username:req.body.username,
         password:req.body.password
     }
     for(i=0;i<loginData.length;i++){
-        if(loginData[i].username==username && loginData[i].password==password){
-            res.status(200).send()
+        if(loginData[i].username==loginSend.username){
+            if(loginData[i].password==loginSend.password){
+                condition=true;
+                res.status(201).json(loginData[i])
+            }
         }
-        else{
-            res.status(401).send("error")
-        }
+    }
+    if(!condition){
+        res.status(400).send("wrong username or password")
     }
   })
 
-    //getting data
+    /////getting data
     app.get('/data', (req,res)=>{
 
+
     })
+
+
+
 
 
 app.listen(port, () => {
